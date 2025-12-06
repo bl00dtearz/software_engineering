@@ -1,0 +1,26 @@
+package com.example.finall.model;
+
+import jakarta.persistence.*;
+import lombok.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "t_genre")
+public class Genre {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+    private boolean isPopular;
+
+    @ManyToMany(mappedBy = "genres")
+    private List<Movie> movies = new ArrayList<>();
+}
+
