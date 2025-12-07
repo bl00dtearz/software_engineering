@@ -5,6 +5,7 @@ import com.example.finall.service.GenreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,17 +18,20 @@ public class GenreApi {
     private final GenreService genreService;
 
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ROLE_USER','ROLE_ADMIN')")
     public ResponseEntity<List<GenreDto>> getAll() {
         return new ResponseEntity<>(genreService.getAll(), HttpStatus.OK);
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<GenreDto> addGenre(@RequestBody GenreDto genreDto) {
         GenreDto added = genreService.addGenre(genreDto);
         return new ResponseEntity<>(added, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> deleteGenre(@PathVariable Long id) {
         boolean deleted = genreService.deleteGenre(id);
         if (!deleted) {
