@@ -18,7 +18,6 @@ public class Genre {
     private Long id;
 
     private String name;
-    private boolean isPopular;
 
     @ManyToMany(mappedBy = "genres")
     private List<Movie> movies = new ArrayList<>();
